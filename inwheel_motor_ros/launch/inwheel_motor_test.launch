@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="inwheel_motor_ros" type="inwheel_motor_node" name="inwheel_test" output="screen"/>
+</launch>
