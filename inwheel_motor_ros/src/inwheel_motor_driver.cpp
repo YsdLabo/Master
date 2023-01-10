@@ -16,6 +16,12 @@ InwheelMotorDriver::InwheelMotorDriver(const char* _device)
 	unsigned char cmd[10] = {0x01, 0x51, 0x70, 0x17, 0, 0, 0, 0, 0x03, 0xDC};
 	unsigned char res[10];
 	WriteCommand(cmd, res);
+	printf("[InwheelMotorDriver] inisitialize finished\n");
+}
+
+InwheelMotorDriver::~InwheelMotorDriver()
+{
+	close();
 }
 
 void InwheelMotorDriver::close()
@@ -102,7 +108,7 @@ int InwheelMotorDriver::get_pulse_count(int* count)
 
 	int ret = WriteCommand(cmd, res);
 
-	if(ret == 1) {
+	if(ret == 0) {
 		int tmp = 0;
 		tmp |= (int)res[5] << 24;
 		tmp |= (int)res[6] << 16;
@@ -120,25 +126,30 @@ int InwheelMotorDriver::WriteCommand(unsigned char cmd[10], unsigned char res[10
 	sp.Write((const char*)cmd, 10);
 
 	int num = 0, cnt = 0;
-	while(num == 10) {
+
+	while(num != 10) {
 		char tmp;
 		if(sp.Read(&tmp, 1) == 1) {
 			res[num] = tmp;
 			num ++;
+			cnt = 0;
 			continue;
 		}
+		// Time out
 		if(cnt++ == 10) {
 			sp.Flush();
-			return 0;
+			return -1;
 		}
 	}
-	// Response Check
-	if(res[0] != cmd[0]) return 0;
-	if(res[1] != cmd[1] + 0x10) return 0;
-	if(res[2] != cmd[2]) return 0;
-	if(res[3] != cmd[3]) return 0;
 
-	return 1;
+	// Response Check
+	if(res[0] != cmd[0]) return -2;
+	if(cmd[1]&0xF0==0x50 && res[1] != cmd[1] + 0x10) return -3;
+	else if(cmd[1]==0xA0 && cmd[1] != res[1]&0xF0) return -3;
+	if(res[2] != cmd[2]) return -4;
+	if(res[3] != cmd[3]) return -5;
+
+	return 0; // success
 }
 
 void InwheelMotorDriver::checksum(unsigned char cmd[10])

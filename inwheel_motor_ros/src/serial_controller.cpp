@@ -23,12 +23,12 @@ SerialPort::SerialPort(const char* _device)
 void SerialPort::Init()
 {
 	tcgetattr(fd, &oldtio);
-	
+
 	bzero(&newtio, sizeof(newtio));
 
 	// control modes
 	newtio.c_cflag |= CS8 | CLOCAL | CREAD;
-	// input modes   
+	// input modes
 	newtio.c_iflag |= IGNPAR | IGNBRK;
 	// output modes
 	newtio.c_oflag = 0;
@@ -39,12 +39,13 @@ void SerialPort::Init()
 	newtio.c_cc[VMIN] = 1;     // Read Byte
 	// set baudrate
 	cfsetspeed(&newtio, baudrate);
-	
+
 	struct serial_struct serial_setting;
 	ioctl(fd, TIOCGSERIAL, &serial_setting);
 	serial_setting.flags |= ASYNC_LOW_LATENCY;
 	ioctl(fd, TIOCSSERIAL, &serial_setting);
 
+	Flush();
 	tcsetattr(fd, TCSANOW, &newtio);
 }
 
@@ -70,8 +71,8 @@ bool SerialPort::Close()
 void SerialPort::Flush()
 {
 	if(fd >= 0) {
-		tcflush(fd, TCIOFLUSH);	// receive/send buffer clear
-		//tcflush(fd, TCOFLUSH);	// send buffer clear
+		tcflush(fd, TCIFLUSH);	// receive/send buffer clear
+		tcflush(fd, TCOFLUSH);	// send buffer clear
 	}
 }
 
@@ -113,7 +114,8 @@ char SerialPort::ReadByte()
 int SerialPort::Read(char* _str, int len)
 {
 	if(fd < 0) return 0;
-	char c;
+	return read(fd, _str, len);
+/*	char c;
 	int read_size = 0;
 	while(read_size < len) {
 		if(Readable() > 0) {
@@ -124,12 +126,13 @@ int SerialPort::Read(char* _str, int len)
 		else break;
 	}
 	return read_size;
+*/
 }
 
 int SerialPort::ReadLine(char* _str, int len)
 {
 	if(fd < 0) return 0;
-	
+
 	char c;
 	int read_size = 0;
 	static int nl_flag = 0;
@@ -184,7 +187,7 @@ void SerialPort::WriteLine(const char* _str, int len)
 {
 	if(fd < 0) return;
 	write(fd, _str, len);
-	write(fd, new_line.c_str(), new_line.size());	
+	write(fd, new_line.c_str(), new_line.size());
 }
 
 void SerialPort::WriteLine(std::string _str)

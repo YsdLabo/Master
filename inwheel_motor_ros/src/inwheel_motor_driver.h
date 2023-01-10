@@ -21,6 +21,7 @@ private:
 
 public:
 	InwheelMotorDriver(const char* _device);
+	~InwheelMotorDriver();
 
 	void close();
 	void motor_on();

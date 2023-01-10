@@ -66,7 +66,7 @@ public:
 		}
 */
 		// トレッド
-		odometry.set_track_width(TRACK_WIDTH);		
+		odometry.set_track_width(TRACK_WIDTH);
 	}
 
 	void run()
