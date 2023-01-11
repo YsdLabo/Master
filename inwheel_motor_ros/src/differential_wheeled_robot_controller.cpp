@@ -11,7 +11,9 @@
 class DifferentialWheeledRobotController
 {
 private:
+	ros::NodeHandle nh;
 	ros::Subscriber sub;
+	ros::Timer timer;
 	InwheelMotorController inwheel_motor;
 	OdometryCalculator  odometry;//(TRACK_WIDTH);
 	double dist_r;
@@ -32,7 +34,10 @@ private:
 		double vl = linear_x - turning;
 
 		inwheel_motor.update(vr, vl);
+	}
 
+	void timer_callback(const ros::TimerEvent& e)
+	{
 		if(inwheel_motor.get_distance(&dist_r, &dist_l)==0) {  // 累積移動距離が得られる
 			double dr = dist_r - last_dist_r;
 			double dl = dist_l - last_dist_l;
@@ -46,8 +51,6 @@ private:
 public:
 	DifferentialWheeledRobotController()
 	{
-		ros::NodeHandle nh;
-		sub = nh.subscribe("cmd_vel", 10, &DifferentialWheeledRobotController::cmd_vel_callback, this);
 		dist_r = last_dist_r = 0.0;
 		dist_l = last_dist_l = 0.0;
 
@@ -71,9 +74,11 @@ public:
 
 	void run()
 	{
-		while(inwheel_motor.get_distance(&last_dist_r, &last_dist_l));
 		inwheel_motor.init();
+		while(inwheel_motor.get_distance(&last_dist_r, &last_dist_l));
 		odometry.init();
+		sub = nh.subscribe("cmd_vel", 10, &DifferentialWheeledRobotController::cmd_vel_callback, this);
+		timer = nh.createTimer(ros::Duration(0.1), &DifferentialWheeledRobotController::timer_callback, this);
 	}
 };
 

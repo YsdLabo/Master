@@ -68,7 +68,7 @@ void OdometryCalculator::update(double dr, double dl)
 		vel_th = d_theta / d_time;
 	}
 
-	make_odom_msg();	
+	make_odom_msg();
 	publish_odom();
 	publish_tf();
 }
@@ -100,7 +100,7 @@ void OdometryCalculator::make_odom_msg()
 	odom.twist.covariance[14] = FLT_MAX;
 	odom.twist.covariance[21] = FLT_MAX;
 	odom.twist.covariance[28] = FLT_MAX;
-	odom.twist.covariance[35] = 0.01;	
+	odom.twist.covariance[35] = 0.01;
 }
 
 void OdometryCalculator::publish_odom()

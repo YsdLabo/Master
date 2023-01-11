@@ -1,0 +1,12 @@
+<launch>
+  <arg name="multi_robot_name" default=""/>
+
+  <include file="$(find my_robot)/launch/my_robot_description.launch"/>
+
+  <include file="$(find ydlidar_ros_driver)/launch/X4.launch"/>
+
+  <include file="$(find inwheel_motor_ros)/launch/inwheel_motor_test.launch"/>
+
+  <param name="robot_description" textfile="$(find my_robot)/urdf/my_robot.urdf" />
+
+</launch>
