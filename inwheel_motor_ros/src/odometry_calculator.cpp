@@ -41,7 +41,7 @@ void OdometryCalculator::update(double dr, double dl)
 
 	double d_dist = (dr + dl) / 2.0;
 	double d_theta = 0.0;
-	if(ABS(dr - dl) < 0.000001)
+	if(std::fabs(dr - dl) < 0.000001)
 	{
 		d_theta = 0.0;
 		cur_x += d_dist * cos(cur_th);

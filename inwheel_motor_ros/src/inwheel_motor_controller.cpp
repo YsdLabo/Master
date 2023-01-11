@@ -51,9 +51,11 @@ int InwheelMotorController::get_distance(double *dist_r, double *dist_l)
 	if(motor_right->get_pulse_count(&count_r)==0 && motor_left->get_pulse_count(&count_l)==0)
 	{
 		count_right = count_r - count_right_i;
-		count_left  = count_l - count_left_i;
+		count_left  = -(count_l - count_left_i);
 		distance_right = count_right * meter_per_ticks;
 		distance_left = count_left * meter_per_ticks;
+		*dist_r = distance_right;
+		*dist_l = distance_left;
 		return 0;    // success
 	}
 	return -1;    // failed
