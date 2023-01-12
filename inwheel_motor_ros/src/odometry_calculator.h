@@ -15,6 +15,8 @@ private:
 	tf::TransformBroadcaster tf_caster;
 	ros::Publisher pub_odom;
 
+	int first_call;
+
 	ros::Time current_time;
 	ros::Time last_time;
 	double cur_x;
