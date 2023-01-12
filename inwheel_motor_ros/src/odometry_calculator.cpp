@@ -2,20 +2,10 @@
 
 #include "odometry_calculator.h"
 
-#define  ABS(x)  x>0?(x):-(x)
-
-OdometryCalculator::OdometryCalculator()
+OdometryCalculator::OdometryCalculator(double tw) : track_width(tw)
 {
 	pub_odom = nh.advertise<nav_msgs::Odometry>("odom", 10);
-	set_track_width(0.0);
-	init();
-}
-
-OdometryCalculator::OdometryCalculator(double tw)
-{
-	pub_odom = nh.advertise<nav_msgs::Odometry>("odom", 10);
-	set_track_width(tw);
-	init();
+	first_call = 1;
 }
 
 void OdometryCalculator::init()
@@ -31,13 +21,21 @@ void OdometryCalculator::init()
 void OdometryCalculator::set_track_width(double tw)
 {
 	if(tw > 0.0)	track_width = tw;
+	else ROS_ERROR("track_width value is not set.");
 }
 
 void OdometryCalculator::update(double dr, double dl)
 {
+	if(first_call == 1) {
+		init();
+		first_call = 0;
+		return;
+	}
+
 	// odometry
 	current_time = ros::Time::now();
 	double d_time = (current_time - last_time).toSec();
+	last_time = current_time;
 
 	double d_dist = (dr + dl) / 2.0;
 	double d_theta = 0.0;

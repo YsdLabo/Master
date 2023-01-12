@@ -27,15 +27,15 @@ private:
 
 	void publish_odom();
 	void publish_tf();
+	void make_odom_msg();
+	double normalize_angle(double angle);
 
 public:
-	OdometryCalculator();
+	OdometryCalculator() = delete;
 	OdometryCalculator(double tw);
 	void init();
 	void set_track_width(double tw);
 	void update(double dr, double dl);
-	void make_odom_msg();
-	double normalize_angle(double angle);
 };
 
 #endif

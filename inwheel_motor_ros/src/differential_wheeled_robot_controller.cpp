@@ -15,7 +15,7 @@ private:
 	ros::Subscriber sub;
 	ros::Timer timer;
 	InwheelMotorController inwheel_motor;
-	OdometryCalculator  odometry;//(TRACK_WIDTH);
+	OdometryCalculator  odometry;
 	double dist_r;
 	double dist_l;
 	double last_dist_r;
@@ -49,11 +49,8 @@ private:
 	}
 
 public:
-	DifferentialWheeledRobotController()
+	DifferentialWheeledRobotController() : odometry(TRACK_WIDTH)
 	{
-		dist_r = last_dist_r = 0.0;
-		dist_l = last_dist_l = 0.0;
-
 /*		ros::NodeHandle pnh("~");
 		double track_width;
 		if(pnh.getParamCached("track_width", track_width)) {
@@ -68,15 +65,15 @@ public:
 			exit(1);
 		}
 */
-		// トレッド
-		odometry.set_track_width(TRACK_WIDTH);
 	}
 
 	void run()
 	{
+		dist_r = last_dist_r = 0.0;
+		dist_l = last_dist_l = 0.0;
+
 		inwheel_motor.init();
 		while(inwheel_motor.get_distance(&last_dist_r, &last_dist_l));
-		odometry.init();
 		sub = nh.subscribe("cmd_vel", 10, &DifferentialWheeledRobotController::cmd_vel_callback, this);
 		timer = nh.createTimer(ros::Duration(0.1), &DifferentialWheeledRobotController::timer_callback, this);
 	}
