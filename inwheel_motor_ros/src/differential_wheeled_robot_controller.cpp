@@ -75,7 +75,7 @@ public:
 		inwheel_motor.init();
 		while(inwheel_motor.get_distance(&last_dist_r, &last_dist_l));
 		sub = nh.subscribe("cmd_vel", 10, &DifferentialWheeledRobotController::cmd_vel_callback, this);
-		timer = nh.createTimer(ros::Duration(0.1), &DifferentialWheeledRobotController::timer_callback, this);
+		timer = nh.createTimer(ros::Duration(0.01), &DifferentialWheeledRobotController::timer_callback, this);
 	}
 };
 
