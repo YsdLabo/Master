@@ -1,6 +1,6 @@
 !README.md
 !inwheel_motor_ros/
-!my_robot/
+my_robot/
 !master_robot/
 digital_filter/
 filtering_pkg/

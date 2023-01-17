@@ -22,7 +22,7 @@ options = {
   tracking_frame = "base_footprint",  -- base_link
   published_frame = "base_footprint",  -- base_link
   odom_frame = "odom",
-  provide_odom_frame = true,
+  provide_odom_frame = false,  -- true
   publish_frame_projected_to_2d = false,
 --  use_pose_extrapolator = true,
   use_odometry = true,
@@ -48,12 +48,14 @@ TRAJECTORY_BUILDER_2D.num_accumulated_range_data = 10
 
 TRAJECTORY_BUILDER_2D.use_imu_data = false
 TRAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = true  -- nessesary
-TRAJECTORY_BUILDER_2D.ceres_scan_matcher.occupied_space_weight = 10
+TRAJECTORY_BUILDER_2D.submaps.num_range_data = 20 -- 90
+TRAJECTORY_BUILDER_2D.ceres_scan_matcher.occupied_space_weight = 10 -- 1
+TRAJECTORY_BUILDER_2D.ceres_scan_matcher.translation_weight = 10
 TRAJECTORY_BUILDER_2D.ceres_scan_matcher.rotation_weight = 220 -- 40
-TRAJECTORY_BUILDER_2D.submaps.num_range_data = 120
 TRAJECTORY_BUILDER_2D.motion_filter.max_distance_meters = 0.1
 TRAJECTORY_BUILDER_2D.motion_filter.max_angle_radians = math.rad(0.2)
 
+POSE_GRAPH.optimize_every_n_nodes = 90
 POSE_GRAPH.constraint_builder.min_score = 0.65
 POSE_GRAPH.constraint_builder.global_localization_min_score = 0.7
 POSE_GRAPH.optimization_problem.huber_scale = 1e3
