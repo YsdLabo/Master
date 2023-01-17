@@ -30,6 +30,7 @@ void InwheelMotorController::init()
 	motor_left->motor_on();
 	while(motor_right->get_pulse_count(&count_right_i)!=0);
 	while(motor_left->get_pulse_count(&count_left_i)!=0);
+	count_left_i *= -1;
 	count_right = 0;
 	count_left = 0;
 	distance_right = 0.0;
@@ -51,7 +52,7 @@ int InwheelMotorController::get_distance(double *dist_r, double *dist_l)
 	if(motor_right->get_pulse_count(&count_r)==0 && motor_left->get_pulse_count(&count_l)==0)
 	{
 		count_right = count_r - count_right_i;
-		count_left  = -(count_l - count_left_i);
+		count_left  = -count_l - count_left_i;
 		distance_right = count_right * meter_per_ticks;
 		distance_left = count_left * meter_per_ticks;
 		*dist_r = distance_right;
