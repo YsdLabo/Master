@@ -1,4 +1,8 @@
 !README.md
+!src/
+!include/
+!launch/
+!urdf/
 !inwheel_motor_ros/
 my_robot/
 !master_robot/
