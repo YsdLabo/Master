@@ -1,7 +1,7 @@
 <launch>
   <arg name="multi_robot_name" default=""/>
 
-  <param name="robot_description" textfile="$(find my_robot)/urdf/my_robot.urdf" />
+  <param name="robot_description" textfile="$(find master_robot)/urdf/my_robot.urdf" />
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="50.0" />
