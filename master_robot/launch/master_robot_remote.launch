@@ -1,7 +1,7 @@
 <launch>
   <arg name="multi_robot_name" default=""/>
 
-  <include file="$(find my_robot)/launch/my_robot_description.launch"/>
+  <include file="$(find master_robot)/launch/my_robot_description.launch"/>
 
   <include file="$(find ydlidar_ros_driver)/launch/X4.launch"/>
 
