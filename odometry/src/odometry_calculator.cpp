@@ -48,8 +48,8 @@ void OdometryCalculator::joint_states_callback(const sensor_msgs::JointState::Co
 	last_time = cur_time;
 
 	for(int i=0;i<msg->name.size();i++) {
-		if(msg->name[i] == "wheel_right_angle") Lr = wheel_radius * msg->position[i];
-		else if(msg->name[i] == "wheel_left_angle") Ll = wheel_radius * msg->position[i];
+		if(msg->name[i] == "right_wheel_axle") Lr = wheel_radius * msg->position[i];
+		else if(msg->name[i] == "left_wheel_axle") Ll = wheel_radius * msg->position[i];
 	}
 
 	d_Lr = Lr - Lr_o;
