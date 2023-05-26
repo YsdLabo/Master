@@ -122,14 +122,14 @@ int InwheelMotorDriver::get_pulse_count(int* count)
 
 void InwheelMotorDriver::reset_pulse_count()
 {
-	unsigned char cmd_motor_off[10] = {0x01, 0x52, 0x70, 0x19, 0, 0, 0, 0, 0x06, 0xE2};
+	motor_off();
+	
 	unsigned char cmd_reset[10] = {0x01, 0x51, 0x70, 0xAC, 0, 0, 0, 0, 1, 0x6F};
-	unsigned char cmd_motor_on[10] = {0x01, 0x52, 0x70, 0x19, 0, 0, 0, 0, 0x0F, 0xEB};
 	unsigned char res[10];
-
-	WriteCommand(cmd_motor_off, res);
 	WriteCommand(cmd_reset, res);
-	WriteCommand(cmd_motor_on, res);
+	printf("[InwheelMotorDriver] reset encoder");
+	
+	motor_on();
 }
 
 int InwheelMotorDriver::WriteCommand(unsigned char cmd[10], unsigned char res[10])
