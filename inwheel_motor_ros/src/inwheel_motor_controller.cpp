@@ -5,7 +5,7 @@
 InwheelMotorController::InwheelMotorController()
 {
 	//
-	std::string _right_dev, _left_dev;
+	std::string _dev_wheel_right, _dev_wheel_left;
 	ros::param::param<std::string>("~dev_wheel_right", _dev_wheel_right, "/dev/ttyAMA1");
 	ros::param::param<std::string>("~dev_wheel_left", _dev_wheel_left, "/dev/ttyAMA2");
 
