@@ -12,7 +12,7 @@ InwheelMotorController::InwheelMotorController()
 	motor_right = new InwheelMotorDriver(_dev_wheel_right.c_str());
 	motor_left = new InwheelMotorDriver(_dev_wheel_left.c_str());
 
-	wheel_radius = WHEEL_RADIUS;
+	ros::param::param<double>("~wheel_radius", wheel_radius, WHEEL_RADIUS);
 	radian_per_ticks = 2.0 * M_PI / PulsePerRotate;
 	meter_per_ticks = wheel_radius * radian_per_ticks;
 	mps_to_rpm = 60.0 / (2.0 * wheel_radius * M_PI);
