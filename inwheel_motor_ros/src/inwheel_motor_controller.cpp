@@ -23,8 +23,6 @@ InwheelMotorController::InwheelMotorController()
 
 InwheelMotorController::~InwheelMotorController()
 {
-	motor_right->motor_off();
-	motor_left->motor_off();
 	delete motor_right;
 	delete motor_left;
 }
