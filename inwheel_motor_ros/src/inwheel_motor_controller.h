@@ -14,6 +14,7 @@ class InwheelMotorController
 private:
 	ros::NodeHandle nh;
 	ros::Publisher pub_joint_states;
+	ros::Timer joint_states_timer;
 
 	InwheelMotorDriver *motor_right;
 	InwheelMotorDriver *motor_left;
