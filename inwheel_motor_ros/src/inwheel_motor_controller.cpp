@@ -12,17 +12,19 @@ InwheelMotorController::InwheelMotorController()
 	motor_right = new InwheelMotorDriver(_dev_wheel_right.c_str());
 	motor_left = new InwheelMotorDriver(_dev_wheel_left.c_str());
 
-	//wheel_radius = WHEEL_RADIUS;
+	wheel_radius = WHEEL_RADIUS;
 	radian_per_ticks = 2.0 * M_PI / PulsePerRotate;
-	//meter_per_ticks = wheel_radius * radian_per_ticks;
-	//mps_to_rpm = 60.0 / (2.0 * wheel_radius * M_PI);
+	meter_per_ticks = wheel_radius * radian_per_ticks;
+	mps_to_rpm = 60.0 / (2.0 * wheel_radius * M_PI);
 
 	pub_joint_states = nh.advertise<sensor_msgs::JointState>("joint_states", 10);
-	nh.CreateTimer();
+	joint_states_timer = nh.createTimer(ros::Duration(0.01), &InwheelMotorController::joint_states_callback, this);
 }
 
 InwheelMotorController::~InwheelMotorController()
 {
+	motor_right->motor_off();
+	motor_left->motor_off();
 	delete motor_right;
 	delete motor_left;
 }
@@ -49,7 +51,7 @@ void InwheelMotorController::update(double vr, double vl)
 	motor_left->move(rpm_l);
 }
 
-void InwheelMotorController::joint_states_timer()
+void InwheelMotorController::joint_states_callback(const ros::TimerEvent& e)
 {
 	// Publish joint_states
 	if(motor_right->get_pulse_count(&count_r)==0 && motor_left->get_pulse_count(&count_l)==0)
@@ -58,28 +60,15 @@ void InwheelMotorController::joint_states_timer()
 		angle_left = -count_l * radian_per_ticks;
 
 		sensor_msgs::JointState js;
-		js.header.stamp = ros::Timer::now();
-		js.name.
-		js.position
+		js.header.stamp = ros::Time::now();
+		js.name.resize(2);
+		js.name[0] = "right_wheel_axle";
+		js.name[1] = "left_wheel_axle";
+		js.position.resize(2);
+		js.position[0] = angle_right;
+		js.position[1] = angle_left;
+		pub_joint_states.publish(js);
 	}
 }
-
-/*
-int InwheelMotorController::get_distance(double *dist_r, double *dist_l)
-{
-	int count_r, count_l;
-	if(motor_right->get_pulse_count(&count_r)==0 && motor_left->get_pulse_count(&count_l)==0)
-	{
-		count_right = count_r - count_right_i;
-		count_left  = -count_l - count_left_i;
-		distance_right = count_right * meter_per_ticks;
-		distance_left = count_left * meter_per_ticks;
-		*dist_r = distance_right;
-		*dist_l = distance_left;
-		return 0;    // success
-	}
-	return -1;    // failed
-}
-*/
 
 
