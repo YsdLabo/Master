@@ -1,9 +1,10 @@
 <launch>
   <arg name="multi_robot_name" default=""/>
+  <param name="wheel_radius" value="0.070" />
+  <param name="track_width" value="0.276" />
 
-  <include file="$(find master_robot)/launch/master_robot_description.launch"/>
-
-  <include file="$(find ydlidar_ros_driver)/launch/X4.launch"/>
-
-  <include file="$(find inwheel_motor_ros)/launch/inwheel_motor_test.launch"/>
+  <include file="$(find master_robot)/launch/master_robot_description.launch" />
+  <include file="$(find ydlidar_ros_driver)/launch/X4.launch" />
+  <include file="$(find inwheel_motor_ros)/launch/inwheel_motor_test.launch" />
+  <include file="$(find odometry)/launch/odometry.launch" />
 </launch>
