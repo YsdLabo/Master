@@ -32,7 +32,6 @@ public:
 	void set_acceleration(double rpss);
 	void set_deacceleration(double rpss);
 	int get_pulse_count(int* count);
-	void reset_pulse_count();
 };
 
 #endif

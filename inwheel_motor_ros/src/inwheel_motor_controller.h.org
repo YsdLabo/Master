@@ -12,9 +12,6 @@
 class InwheelMotorController
 {
 private:
-	ros::NodeHandle nh;
-	ros::Publisher pub_joint_states;
-
 	InwheelMotorDriver *motor_right;
 	InwheelMotorDriver *motor_left;
 
@@ -35,7 +32,7 @@ public:
 
 	void init();
 	void update(double vr, double vl);
-	//int get_distance(double *dist_r, double *dist_l);
+	int get_distance(double *dist_r, double *dist_l);
 };
 
 #endif

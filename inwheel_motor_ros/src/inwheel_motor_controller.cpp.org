@@ -6,19 +6,16 @@ InwheelMotorController::InwheelMotorController()
 {
 	//
 	std::string _right_dev, _left_dev;
-	ros::param::param<std::string>("~dev_wheel_right", _dev_wheel_right, "/dev/ttyAMA1");
-	ros::param::param<std::string>("~dev_wheel_left", _dev_wheel_left, "/dev/ttyAMA2");
+	ros::param::param<std::string>("~right_wheel_dev", _right_dev, "/dev/ttyAMA1");
+	ros::param::param<std::string>("~left_wheel_dev", _left_dev, "/dev/ttyAMA2");
 
-	motor_right = new InwheelMotorDriver(_dev_wheel_right.c_str());
-	motor_left = new InwheelMotorDriver(_dev_wheel_left.c_str());
+	motor_right = new InwheelMotorDriver(_right_dev.c_str());
+	motor_left = new InwheelMotorDriver(_left_dev.c_str());
 
-	//wheel_radius = WHEEL_RADIUS;
+	wheel_radius = WHEEL_RADIUS;
 	radian_per_ticks = 2.0 * M_PI / PulsePerRotate;
-	//meter_per_ticks = wheel_radius * radian_per_ticks;
-	//mps_to_rpm = 60.0 / (2.0 * wheel_radius * M_PI);
-
-	pub_joint_states = nh.advertise<sensor_msgs::JointState>("joint_states", 10);
-	nh.CreateTimer();
+	meter_per_ticks = wheel_radius * radian_per_ticks;
+	mps_to_rpm = 60.0 / (2.0 * wheel_radius * M_PI);
 }
 
 InwheelMotorController::~InwheelMotorController()
@@ -49,22 +46,6 @@ void InwheelMotorController::update(double vr, double vl)
 	motor_left->move(rpm_l);
 }
 
-void InwheelMotorController::joint_states_timer()
-{
-	// Publish joint_states
-	if(motor_right->get_pulse_count(&count_r)==0 && motor_left->get_pulse_count(&count_l)==0)
-	{
-		angle_right = count_r * radian_per_ticks;
-		angle_left = -count_l * radian_per_ticks;
-
-		sensor_msgs::JointState js;
-		js.header.stamp = ros::Timer::now();
-		js.name.
-		js.position
-	}
-}
-
-/*
 int InwheelMotorController::get_distance(double *dist_r, double *dist_l)
 {
 	int count_r, count_l;
@@ -80,6 +61,6 @@ int InwheelMotorController::get_distance(double *dist_r, double *dist_l)
 	}
 	return -1;    // failed
 }
-*/
+
 
 

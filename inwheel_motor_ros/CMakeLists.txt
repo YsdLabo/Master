@@ -211,7 +211,6 @@ add_executable(differential_wheeled_robot_node
  src/inwheel_motor_driver.cpp
  src/inwheel_motor_controller.cpp
  src/differential_wheeled_robot_controller.cpp
- src/odometry_calculator.cpp
  src/serial_controller.cpp
 )
 
