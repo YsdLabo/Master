@@ -9,9 +9,6 @@ OdometryCalculator::OdometryCalculator()
 
 void OdometryCalculator::run()
 {
-	sub_joint_states = nh.subscribe("joint_states", 10, &OdometryCalculator::joint_states_callback, this);
-	pub_odom = nh.advertise<nav_msgs::Odometry>("odom", 10);
-
 	ros::NodeHandle pnh("~");
 	if(pnh.getParam("~track_width", track_width))
 	{
@@ -30,6 +27,9 @@ void OdometryCalculator::run()
 		wheel_radius = 0.1;
 		ROS_WARN("Set DEFAULT value for wheel radius: %lf", wheel_radius);
 	}
+	
+	sub_joint_states = nh.subscribe("joint_states", 10, &OdometryCalculator::joint_states_callback, this);
+	pub_odom = nh.advertise<nav_msgs::Odometry>("odom", 10);
 }
 
 void OdometryCalculator::init()
@@ -82,8 +82,10 @@ void OdometryCalculator::update()
 		d_theta = (d_Lr - d_Ll) / track_width;
 		double rho = d_L / d_theta;
 		double d_Lp = 2.0 * rho * sin(d_theta * 0.5);
-		cur_x += d_Lp * cos(cur_th + d_theta * 0.5);
-		cur_y += d_Lp * sin(cur_th + d_theta * 0.5);
+		double d_x = d_Lp * cos(cur_th + d_theta * 0.5);
+		double d_y = d_Lp * sin(cur_th + d_theta * 0.5);
+		cur_x += d_x;
+		cur_y += d_y;
 		cur_th = normalize_angle(cur_th + d_theta);
 	}
 
