@@ -74,16 +74,16 @@ void OdometryCalculator::update()
 	if(std::fabs(d_Lr - d_Ll) < 0.000001)
 	{
 		d_theta = 0.0;
-		cur_x += d_L * cos(cur_th);
-		cur_y += d_L * sin(cur_th);
+		cur_x += d_L * std::cos(cur_th);
+		cur_y += d_L * std::sin(cur_th);
 	}
 	else
 	{
 		d_theta = (d_Lr - d_Ll) / track_width;
 		double rho = d_L / d_theta;
-		double d_Lp = 2.0 * rho * sin(d_theta * 0.5);
-		double d_x = d_Lp * cos(cur_th + d_theta * 0.5);
-		double d_y = d_Lp * sin(cur_th + d_theta * 0.5);
+		double d_Lp = 2.0 * rho * std::sin(d_theta * 0.5);
+		double d_x = d_Lp * std::cos(cur_th + d_theta * 0.5);
+		double d_y = d_Lp * std::sin(cur_th + d_theta * 0.5);
 		cur_x += d_x;
 		cur_y += d_y;
 		cur_th = normalize_angle(cur_th + d_theta);
