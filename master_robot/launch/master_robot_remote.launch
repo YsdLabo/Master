@@ -5,5 +5,5 @@
 
   <include file="$(find master_robot)/launch/master_robot_description.launch" />
   <include file="$(find ydlidar_ros_driver)/launch/X4.launch" />
-  <include file="$(find inwheel_motor_ros)/launch/inwheel_motor_test.launch" />
+  <include file="$(find inwheel_motor_ros)/launch/differential_wheeled_robot_controller.launch" />
 </launch>

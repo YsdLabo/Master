@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="inwheel_motor_ros" type="differential_wheeled_robot_node" name="diffential_wheeled_robot_controller" output="screen"/>
+</launch>

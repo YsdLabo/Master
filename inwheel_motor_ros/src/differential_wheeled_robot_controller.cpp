@@ -46,7 +46,7 @@ public:
 		dist_l = last_dist_l = 0.0;
 
 		inwheel_motor.init();
-		while(inwheel_motor.get_distance(&last_dist_r, &last_dist_l));
+		//while(inwheel_motor.get_distance(&last_dist_r, &last_dist_l));
 		sub = nh.subscribe("cmd_vel", 10, &DifferentialWheeledRobotController::cmd_vel_callback, this);
 	}
 };

@@ -10,7 +10,7 @@ OdometryCalculator::OdometryCalculator()
 void OdometryCalculator::run()
 {
 	ros::NodeHandle pnh("~");
-	if(pnh.getParam("~track_width", track_width))
+	if(pnh.getParam("/track_width", track_width))
 	{
 		ROS_INFO("Set track width: %lf", track_width);
 	}
@@ -19,7 +19,7 @@ void OdometryCalculator::run()
 		ROS_WARN("Set DEFAULT value for track width: %lf", track_width);
 	}
 
-	if(pnh.getParam("~wheel_radius", wheel_radius))
+	if(pnh.getParam("/wheel_radius", wheel_radius))
 	{
 		ROS_INFO("Set wheel radius: %lf", wheel_radius);
 	}
@@ -29,7 +29,7 @@ void OdometryCalculator::run()
 	}
 	
 	sub_joint_states = nh.subscribe("joint_states", 10, &OdometryCalculator::joint_states_callback, this);
-	pub_odom = nh.advertise<nav_msgs::Odometry>("odom", 10);
+	pub_odom = nh.advertise<nav_msgs::Odometry>("odom", 10, this);
 }
 
 void OdometryCalculator::init()
@@ -48,8 +48,8 @@ void OdometryCalculator::joint_states_callback(const sensor_msgs::JointState::Co
 	last_time = cur_time;
 
 	for(int i=0;i<msg->name.size();i++) {
-		if(msg->name[i] == "right_wheel_axle") Lr = wheel_radius * msg->position[i];
-		else if(msg->name[i] == "left_wheel_axle") Ll = wheel_radius * msg->position[i];
+		if(msg->name[i] == "wheel_right_joint") Lr = wheel_radius * msg->position[i];
+		else if(msg->name[i] == "wheel_left_joint") Ll = wheel_radius * msg->position[i];
 	}
 
 	d_Lr = Lr - Lr_o;

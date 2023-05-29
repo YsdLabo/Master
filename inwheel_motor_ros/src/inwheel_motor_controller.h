@@ -1,6 +1,7 @@
 // Inwheel Motor Controller Header
 
 #include <ros/ros.h>
+#include <sensor_msgs/JointState.h>
 #include "inwheel_motor_driver.h"
 
 #ifndef _INWHEEL_MOTOR_CONTROLLER_H_
@@ -26,9 +27,9 @@ private:
 
 	int count_right, count_right_i;
 	int count_left, count_left_i;
+	double angle_right, angle_left;
 
-	double distance_right;
-	double distance_left;
+	void joint_states_callback(const ros::TimerEvent&);
 
 public:
 	InwheelMotorController();

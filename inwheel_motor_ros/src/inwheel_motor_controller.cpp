@@ -17,7 +17,7 @@ InwheelMotorController::InwheelMotorController()
 	meter_per_ticks = wheel_radius * radian_per_ticks;
 	mps_to_rpm = 60.0 / (2.0 * wheel_radius * M_PI);
 
-	pub_joint_states = nh.advertise<sensor_msgs::JointState>("joint_states", 10);
+	pub_joint_states = nh.advertise<sensor_msgs::JointState>("joint_states", 10, this);
 	joint_states_timer = nh.createTimer(ros::Duration(0.01), &InwheelMotorController::joint_states_callback, this);
 }
 
@@ -36,8 +36,8 @@ void InwheelMotorController::init()
 	count_left_i *= -1;
 	count_right = 0;
 	count_left = 0;
-	distance_right = 0.0;
-	distance_left = 0.0;
+	angle_right = 0.0;
+	angle_left = 0.0;
 }
 
 void InwheelMotorController::update(double vr, double vl)
@@ -52,16 +52,16 @@ void InwheelMotorController::update(double vr, double vl)
 void InwheelMotorController::joint_states_callback(const ros::TimerEvent& e)
 {
 	// Publish joint_states
-	if(motor_right->get_pulse_count(&count_r)==0 && motor_left->get_pulse_count(&count_l)==0)
+	if(motor_right->get_pulse_count(&count_right)==0 && motor_left->get_pulse_count(&count_left)==0)
 	{
-		angle_right = count_r * radian_per_ticks;
-		angle_left = -count_l * radian_per_ticks;
+		angle_right = count_right * radian_per_ticks;
+		angle_left = -count_left * radian_per_ticks;
 
 		sensor_msgs::JointState js;
 		js.header.stamp = ros::Time::now();
 		js.name.resize(2);
-		js.name[0] = "right_wheel_axle";
-		js.name[1] = "left_wheel_axle";
+		js.name[0] = "wheel_right_joint";
+		js.name[1] = "wheel_left_joint";
 		js.position.resize(2);
 		js.position[0] = angle_right;
 		js.position[1] = angle_left;
