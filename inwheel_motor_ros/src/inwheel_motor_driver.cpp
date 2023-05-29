@@ -16,7 +16,7 @@ InwheelMotorDriver::InwheelMotorDriver(const char* _device)
 	unsigned char cmd[10] = {0x01, 0x51, 0x70, 0x17, 0, 0, 0, 0, 0x03, 0xDC};
 	unsigned char res[10];
 	WriteCommand(cmd, res);
-	printf("[InwheelMotorDriver] inisitialize finished\n");
+	printf("[InwheelMotorDriver] initialize finished\n");
 }
 
 InwheelMotorDriver::~InwheelMotorDriver()
