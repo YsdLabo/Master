@@ -29,8 +29,8 @@ InwheelMotorController::~InwheelMotorController()
 
 void InwheelMotorController::init()
 {
-	motor_right->motor_on();
-	motor_left->motor_on();
+	motor_right->reset_pulse_count();
+	motor_left->reset_pulse_count();
 	while(motor_right->get_pulse_count(&count_right_i)!=0);
 	while(motor_left->get_pulse_count(&count_left_i)!=0);
 	count_left_i *= -1;
