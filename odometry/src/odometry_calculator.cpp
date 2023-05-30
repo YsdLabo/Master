@@ -52,7 +52,6 @@ void OdometryCalculator::joint_states_callback(const sensor_msgs::JointState::Co
 		else if(msg->name[i] == "wheel_left_joint") Ll = wheel_radius * msg->position[i];
 		else return;
 	}
-ROS_INFO("Lr:%lf  Ll:%lf", Lr, Ll);
 
 	d_Lr = Lr - Lr_o;
 	d_Ll = Ll - Ll_o;
