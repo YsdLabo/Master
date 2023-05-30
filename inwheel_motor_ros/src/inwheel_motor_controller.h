@@ -37,7 +37,6 @@ public:
 
 	void init();
 	void update(double vr, double vl);
-	//int get_distance(double *dist_r, double *dist_l);
 };
 
 #endif

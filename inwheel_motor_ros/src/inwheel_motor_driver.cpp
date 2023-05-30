@@ -16,7 +16,7 @@ InwheelMotorDriver::InwheelMotorDriver(const char* _device)
 	unsigned char cmd[10] = {0x01, 0x51, 0x70, 0x17, 0, 0, 0, 0, 0x03, 0xDC};
 	unsigned char res[10];
 	WriteCommand(cmd, res);
-	printf("[InwheelMotorDriver] inisitialize finished\n");
+	printf("[InwheelMotorDriver] initialize finished\n");
 }
 
 InwheelMotorDriver::~InwheelMotorDriver()
@@ -117,7 +117,7 @@ int InwheelMotorDriver::get_pulse_count(int* count)
 		*count = tmp;
 		return 0;    // success
 	}
-	return -1;    // failed
+	return ret;    // failed
 }
 
 void InwheelMotorDriver::reset_pulse_count()
@@ -160,6 +160,7 @@ int InwheelMotorDriver::WriteCommand(unsigned char cmd[10], unsigned char res[10
 	else if(cmd[1]==0xA0 && cmd[1] != res[1]&0xF0) return -3;
 	if(res[2] != cmd[2]) return -4;
 	if(res[3] != cmd[3]) return -5;
+	if(res[4] != 0) return res[4];
 
 	return 0; // success
 }
