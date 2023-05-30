@@ -27,7 +27,7 @@ void OdometryCalculator::run()
 		wheel_radius = 0.1;
 		ROS_WARN("Set DEFAULT value for wheel radius: %lf", wheel_radius);
 	}
-	
+
 	sub_joint_states = nh.subscribe("joint_states", 10, &OdometryCalculator::joint_states_callback, this);
 	pub_odom = nh.advertise<nav_msgs::Odometry>("odom", 10, this);
 }
@@ -50,7 +50,9 @@ void OdometryCalculator::joint_states_callback(const sensor_msgs::JointState::Co
 	for(int i=0;i<msg->name.size();i++) {
 		if(msg->name[i] == "wheel_right_joint") Lr = wheel_radius * msg->position[i];
 		else if(msg->name[i] == "wheel_left_joint") Ll = wheel_radius * msg->position[i];
+		else return;
 	}
+ROS_INFO("Lr:%lf  Ll:%lf", Lr, Ll);
 
 	d_Lr = Lr - Lr_o;
 	d_Ll = Ll - Ll_o;
@@ -133,6 +135,7 @@ void OdometryCalculator::publish_odom()
 	odom.twist.covariance[28] = FLT_MAX;
 	odom.twist.covariance[35] = 0.01;
 
+	//ROS_INFO("x:%lf  y:%lf  th:%lf", cur_x, cur_y, cur_th);
 	pub_odom.publish(odom);
 }
 
