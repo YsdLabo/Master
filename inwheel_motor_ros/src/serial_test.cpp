@@ -18,7 +18,8 @@ int main(int argc, char** argv)
 	
 	// Read Command
 	char res[9];
-	int num=0, cnt=0;
+	sp.Read(res, 9);
+/*	int num=0, cnt=0;
 	while(num != 9) {  // Read 9 bytes
 		char tmp;
 		if(sp.Read(&tmp, 1) == 1) {
@@ -34,6 +35,7 @@ int main(int argc, char** argv)
 			break;
 		}
 	}
+*/
 	printf("Motor Power: %d\n", res[5]);
 	printf("Batt Voltage: %f [V]\n", res[6]*0.04);
 	printf("Batt Current: %f [A]\n", res[7]*0.1);
