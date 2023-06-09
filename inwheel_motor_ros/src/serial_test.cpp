@@ -40,4 +40,6 @@ int main(int argc, char** argv)
 
 	// Finish
 	sp.Close();
+	
+	return 0;
 }
