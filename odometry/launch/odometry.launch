@@ -1,3 +1,6 @@
 <launch>
-	<node name="odometry_node" pkg="odometry" type="odometry_node" output="screen" />
+  <node name="odometry_node" pkg="odometry" type="odometry_node" output="screen">
+    <param name="track_width" value="0.070"/>
+    <param name="wheel_radius" value="0.276"/>
+  </node>
 </launch>

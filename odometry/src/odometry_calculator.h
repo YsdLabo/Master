@@ -19,21 +19,21 @@ private:
 
 	int first_call;
 
-	ros::Time cur_time;
-	ros::Time last_time;
-	double d_time;
-	double cur_x;
-	double cur_y;
-	double cur_th;
-	double cur_v_x;
-	double cur_v_th;
+	ros::Time cur_time;	// 現在の時間
+	ros::Time last_time;	// 前回の時間
+	double d_time;		// 微小時間
+	double cur_x;		// 現在のX座標値
+	double cur_y;		// 現在のY座標値
+	double cur_th;		// 現在のYaw角
+	double cur_v_x;		// 現在の並進速度
+	double cur_v_th;	// 現在の旋回角速度
 
-	double Lr, Ll;
-	double d_Lr, d_Ll;
+	double Lr, Ll;		// 右車輪の移動距離，左車輪の移動距離
+	double d_Lr, d_Ll;	// 右車輪の微小移動距離，左車輪の微小移動距離
 	double Lr_o, Ll_o;
 
-	double track_width;
-	double wheel_radius;
+	double track_width;	// トラック幅
+	double wheel_radius;	// 車輪半径
 
 	void init();
 	void update();
