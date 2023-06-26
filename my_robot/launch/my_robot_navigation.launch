@@ -6,6 +6,7 @@
 
   <!-- Robot -->
   <!--include file="$(find my_robot)/launch/my_robot_description.launch"/-->
+  <node name="odometry" pkg="odometry" type="odometry_node"/>
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
