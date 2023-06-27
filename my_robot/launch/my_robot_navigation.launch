@@ -3,12 +3,15 @@
   <arg name="map_file" default="$(find my_robot)/maps/map.yaml"/>
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
+  <arg name="without_odom" default="false"/>
 
   <!-- Robot -->
   <!--include file="$(find my_robot)/launch/my_robot_description.launch"/-->
-  <param name="track_width" value="0.276"/>
-  <param name="wheel_radius" value="0.070"/>
-  <node name="odometry" pkg="odometry" type="odometry_node"/>
+  <group unless="$(arg without_odom)">
+    <param name="track_width" value="0.276"/>
+    <param name="wheel_radius" value="0.070"/>
+    <node name="odometry" pkg="odometry" type="odometry_node"/>
+  </group>
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
