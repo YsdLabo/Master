@@ -1,6 +1,5 @@
 <launch>
   <!-- Arguments -->
-  <arg name="map_file" default="$(find my_robot)/maps/map.yaml"/>
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
   <arg name="without_odom" default="false"/>
