@@ -9,7 +9,7 @@
   <group unless="$(arg without_odom)">
     <param name="track_width" value="0.276"/>
     <param name="wheel_radius" value="0.070"/>
-    <node name="odometry" pkg="odometry" type="odometry_node"/>
+    <node name="odometry" pkg="odometry" type="odometry_node" output="screen"/>
   </group>
 
   <!-- Map server -->

@@ -12,20 +12,20 @@ void OdometryCalculator::run()
 	ros::NodeHandle pnh("~");
 	if(pnh.getParam("/track_width", track_width))
 	{
-		ROS_INFO("Set track width: %lf", track_width);
+		ROS_INFO("Odometry Node: Set track width: %lf", track_width);
 	}
 	else {
 		track_width = 1.0;
-		ROS_WARN("Set DEFAULT value for track width: %lf", track_width);
+		ROS_WARN("Odometry Node: Set DEFAULT value for track width: %lf", track_width);
 	}
 
 	if(pnh.getParam("/wheel_radius", wheel_radius))
 	{
-		ROS_INFO("Set wheel radius: %lf", wheel_radius);
+		ROS_INFO("Odometry Node: Set wheel radius: %lf", wheel_radius);
 	}
 	else {
 		wheel_radius = 0.1;
-		ROS_WARN("Set DEFAULT value for wheel radius: %lf", wheel_radius);
+		ROS_WARN("Odometry Node: Set DEFAULT value for wheel radius: %lf", wheel_radius);
 	}
 
 	sub_joint_states = nh.subscribe("joint_states", 10, &OdometryCalculator::joint_states_callback, this);
