@@ -1,9 +1,9 @@
 #include "sma_filter.h"
 
 // コンストラクタ
-SMA::SMA(int n)
+SMA::SMA(int n) : NUM(n)
 {
-	init(n);
+	init();
 }
 
 // デストラクタ
@@ -13,8 +13,9 @@ SMA::~SMA()
 }
 
 // 初期化メソッド
-void SMA::init(int n)
+void SMA::init()
 {
+
 }
 
 // 実行メソッド

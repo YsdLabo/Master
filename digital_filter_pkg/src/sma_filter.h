@@ -24,10 +24,10 @@ private:
 	void publication();
 	
 public:
-	SMA() :SMA(1) {};
+	SMA() = delete;
 	SMA(int n);
 	~SMA();
-	void init(int n);
+	void init();
 	void run();
 };
 #endif
