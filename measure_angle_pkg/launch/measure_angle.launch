@@ -1,0 +1,4 @@
+<launch>
+  <node name="Bno055" pkg="bno055_usb_stick" type="bno055_usb_stick_node" args="_port:=/dev/ttyBNO055"/>
+  <node name="measure_angle" pkg="measure_angle_test" type="measure_angle_node" output="screen"/>
+</launch>

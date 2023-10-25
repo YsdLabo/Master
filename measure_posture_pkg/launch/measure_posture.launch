@@ -1,0 +1,7 @@
+<launch>
+  <node name="bno055_usb_stick" pkg="bno055_usb_stick" type="bno055_usb_stick_node"/>
+  <node name="filter" pkg="digital_filter_test" type="digital_filter_node" />
+  <node name="measure_posture" pkg="measure_posture_test" type="measure_posture_node" >
+    <param name="port" value="/dev/ttyBNO055"/>
+  </node>
+</launch>
