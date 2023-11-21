@@ -27,6 +27,6 @@
   <!-- rviz -->
   <group if="$(arg open_rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true"
-          args="-d $(find master_robot)/rviz/master_robot_navigation.rviz"/>
+          args="-d $(find master_robot)/rviz/my_robot_navigation.rviz"/>
   </group>
 </launch>
