@@ -1,0 +1,32 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="open_rviz" default="true"/>
+  <arg name="move_forward_only" default="false"/>
+  <arg name="without_odom" default="false"/>
+
+  <!-- Robot -->
+  <include file="$(find master_robot)/launch/master_robot_description.launch"/>
+  
+  <group unless="$(arg without_odom)">
+    <param name="track_width" value="0.276"/>
+    <param name="wheel_radius" value="0.070"/>
+    <node name="odometry" pkg="odometry" type="odometry_node" output="screen"/>
+  </group>
+
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- AMCL -->
+  <include file="$(find master_robot)/launch/amcl.launch"/>
+
+  <!-- move_base -->
+  <include file="$(find master_robot)/launch/move_base.launch">
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find master_robot)/rviz/master_robot_navigation.rviz"/>
+  </group>
+</launch>

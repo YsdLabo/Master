@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find ydlidar_ros_driver)/launch/lidar_view.launch"/>
+  <include file="$(find master_robot)/launch/master_robot_description.launch"/>
+  <include file="$(find master_robot)/launch/cartographer.launch"/>
+</launch>
