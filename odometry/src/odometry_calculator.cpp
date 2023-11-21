@@ -53,8 +53,8 @@ void OdometryCalculator::joint_states_callback(const sensor_msgs::JointState::Co
 		else return;
 	}
 
-	d_Lr = Lr - Lr_o;
-	d_Ll = Ll - Ll_o;
+	d_Lr = Lr - Lr_o;	// 右車輪の微小並進移動距離
+	d_Ll = Ll - Ll_o;	// 左車輪の微小並進移動距離
 	Lr_o = Lr;
 	Ll_o = Ll;
 
@@ -69,25 +69,25 @@ void OdometryCalculator::joint_states_callback(const sensor_msgs::JointState::Co
 
 void OdometryCalculator::update()
 {
-	double d_L = (d_Lr + d_Ll) / 2.0;
+	double d_L = (d_Lr + d_Ll) / 2.0;	// 微小時間での移動距離 dL
 	double d_theta = 0.0;
 
+	// 直進のとき
 	if(std::fabs(d_Lr - d_Ll) < 0.000001)
 	{
-		d_theta = 0.0;
-		cur_x += d_L * std::cos(cur_th);
-		cur_y += d_L * std::sin(cur_th);
+		d_theta = 0.0;		// 旋回していない
+		cur_x += d_L * std::cos(cur_th);	// 現在のX座標値
+		cur_y += d_L * std::sin(cur_th);	// 現在のY座標値
 	}
+	// 旋回のとき
 	else
 	{
-		d_theta = (d_Lr - d_Ll) / track_width;
-		double rho = d_L / d_theta;
-		double d_Lp = 2.0 * rho * std::sin(d_theta * 0.5);
-		double d_x = d_Lp * std::cos(cur_th + d_theta * 0.5);
-		double d_y = d_Lp * std::sin(cur_th + d_theta * 0.5);
-		cur_x += d_x;
-		cur_y += d_y;
-		cur_th = normalize_angle(cur_th + d_theta);
+		d_theta = (d_Lr - d_Ll) / track_width;		// 微小時間での旋回角度 dθ
+		double rho = d_L / d_theta;		// 旋回半径 R
+		double d_Lp = 2.0 * rho * std::sin(d_theta * 0.5);	// dL'
+		cur_x += d_Lp * std::cos(cur_th + d_theta * 0.5);	// 現在のX座標値
+		cur_y += d_Lp * std::sin(cur_th + d_theta * 0.5);	// 現在のY座標値
+		cur_th = normalize_angle(cur_th + d_theta);		// 現在のYaw角
 	}
 
 	if(d_time < 0.000001)
@@ -97,8 +97,8 @@ void OdometryCalculator::update()
 	}
 	else
 	{
-		cur_v_x = d_L / d_time;
-		cur_v_th = d_theta / d_time;
+		cur_v_x = d_L / d_time;		// 並進速度
+		cur_v_th = d_theta / d_time;	// 旋回角速度
 	}
 
 	publish_odom();
