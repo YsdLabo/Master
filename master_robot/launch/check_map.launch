@@ -1,5 +1,0 @@
-<launch>
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
-  <node name="rviz" pkg="rviz" type="rviz" args="-f map" required="true"/>
-  <node name="rostopic" pkg="rostopic" type="rostopic" args="echo /initialpose" output="screen"/>
-</launch>
