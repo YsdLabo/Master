@@ -28,6 +28,8 @@ void OdometryCalculator::run()
 		ROS_WARN("Odometry Node: Set DEFAULT value for wheel radius: %lf", wheel_radius);
 	}
 
+	pnh.param("publish_tf", publish_tf_enable, true);
+
 	sub_joint_states = nh.subscribe("joint_states", 10, &OdometryCalculator::joint_states_callback, this);
 	pub_odom = nh.advertise<nav_msgs::Odometry>("odom", 10, this);
 }
@@ -102,7 +104,7 @@ void OdometryCalculator::update()
 	}
 
 	publish_odom();
-	publish_tf();
+	if(publish_tf_enable) publish_tf();
 }
 
 void OdometryCalculator::publish_odom()

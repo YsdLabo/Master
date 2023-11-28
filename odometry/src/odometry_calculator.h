@@ -34,6 +34,7 @@ private:
 
 	double track_width;	// トラック幅
 	double wheel_radius;	// 車輪半径
+	bool publish_tf_enable;
 
 	void init();
 	void update();
