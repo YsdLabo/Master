@@ -1,0 +1,12 @@
+<launch>
+  <node name="odometry_node"  pkg="odometry"  type="odometry_node" output="screen">
+    <param name="publish_tf" value="false"/>
+  </node>
+  <node name="ekf" pkg="robot_localization" type="ekf_localization_node" output="screen">
+    <rosparam command="load" file="$(find my_robot)/param/ekf.yaml" />
+    <param name="odom0" value="/odom" />
+    <param name="imu0" value="/imu" />
+  </node>
+  <node name="teleop" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-f odom -d $(find my_robot)/rviz/odom_test.rviz" required="true"/>
+</launch>
