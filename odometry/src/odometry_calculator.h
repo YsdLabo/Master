@@ -13,7 +13,7 @@ class OdometryCalculator
 private:
 	ros::NodeHandle nh;
 	nav_msgs::Odometry odom;
-	tf::TransformBroadcaster tf_caster;
+//	tf::TransformBroadcaster tf_caster;
 	ros::Subscriber sub_joint_states;
 	ros::Publisher pub_odom;
 

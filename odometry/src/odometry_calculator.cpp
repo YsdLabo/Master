@@ -123,7 +123,7 @@ void OdometryCalculator::publish_odom()
 	odom.pose.covariance[14] = FLT_MAX;
 	odom.pose.covariance[21] = FLT_MAX;
 	odom.pose.covariance[28] = FLT_MAX;
-	odom.pose.covariance[35] = 0.01;
+	odom.pose.covariance[35] = 1e3;
 
 	odom.twist.twist.linear.x = cur_v_x;
 	odom.twist.twist.linear.y = 0.0;
@@ -134,7 +134,7 @@ void OdometryCalculator::publish_odom()
 	odom.twist.covariance[14] = FLT_MAX;
 	odom.twist.covariance[21] = FLT_MAX;
 	odom.twist.covariance[28] = FLT_MAX;
-	odom.twist.covariance[35] = 0.01;
+	odom.twist.covariance[35] = 1e3;
 
 	//ROS_INFO("x:%lf  y:%lf  th:%lf", cur_x, cur_y, cur_th);
 	pub_odom.publish(odom);
@@ -152,7 +152,7 @@ void OdometryCalculator::publish_tf()
 	tf_trans.transform.translation.z = odom.pose.pose.position.z;
 	tf_trans.transform.rotation = odom.pose.pose.orientation;
 
-	tf_caster.sendTransform(tf_trans);
+//	tf_caster.sendTransform(tf_trans);
 }
 
 double OdometryCalculator::normalize_angle(double angle)
