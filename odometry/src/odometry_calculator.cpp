@@ -119,22 +119,22 @@ void OdometryCalculator::publish_odom()
 	odom.pose.pose.orientation = tf::createQuaternionMsgFromYaw(cur_th);
 
 	odom.pose.covariance[0] = 0.01;
-	odom.pose.covariance[7] = 0.01;
+	odom.pose.covariance[7] = 0.0001;
 	odom.pose.covariance[14] = FLT_MAX;
 	odom.pose.covariance[21] = FLT_MAX;
 	odom.pose.covariance[28] = FLT_MAX;
-	odom.pose.covariance[35] = 1e3;
+	odom.pose.covariance[35] = 0.1;
 
 	odom.twist.twist.linear.x = cur_v_x;
 	odom.twist.twist.linear.y = 0.0;
 	odom.twist.twist.angular.z = cur_v_th;
 
 	odom.twist.covariance[0] = 0.01;
-	odom.twist.covariance[7] = 0.01;
+	odom.twist.covariance[7] = 0.0001;
 	odom.twist.covariance[14] = FLT_MAX;
 	odom.twist.covariance[21] = FLT_MAX;
 	odom.twist.covariance[28] = FLT_MAX;
-	odom.twist.covariance[35] = 1e3;
+	odom.twist.covariance[35] = 0.1;
 
 	//ROS_INFO("x:%lf  y:%lf  th:%lf", cur_x, cur_y, cur_th);
 	pub_odom.publish(odom);

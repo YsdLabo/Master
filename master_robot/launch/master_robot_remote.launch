@@ -5,8 +5,9 @@
 
   <include file="$(find master_robot)/launch/master_robot_description.launch" />
   <include file="$(find ydlidar_ros_driver)/launch/X4.launch" />
-  <node name="bno055_usb_stick" pkg="bno055_usb_stick" type="bno055_usb_stick_node">
+  <node name="bno055_usb_stick" pkg="bno055_usb_stick" type="bno055_usb_stick_node" output="screen">
     <param name="port" value="/dev/ttyBNO055"/>
+    <param name="mode" value="ndof"/>
     <param name="frame_id" value="imu_link"/>
   </node>
   <include file="$(find inwheel_motor_ros)/launch/differential_wheeled_robot_controller.launch" />

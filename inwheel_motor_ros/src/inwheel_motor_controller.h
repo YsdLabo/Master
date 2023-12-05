@@ -28,6 +28,7 @@ private:
 	int count_right, count_right_i;
 	int count_left, count_left_i;
 	double angle_right, angle_left;
+	double rpm_r, rpm_l;
 
 	void joint_states_callback(const ros::TimerEvent&);
 
