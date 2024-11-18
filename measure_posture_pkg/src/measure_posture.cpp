@@ -1,5 +1,5 @@
 #include"cal_posture_by_gravity.h" 
-#include"cal_posture_by_gyro.h" 
+//#include"cal_posture_by_gyro.h" 
 
 int main(int argc, char** argv)
 {
@@ -8,8 +8,8 @@ int main(int argc, char** argv)
 	CalPostureByGravity grav;
 	grav.run();
 	
-	CalPostureByGyro gyro;
-	gyro.run();
+	//CalPostureByGyro gyro;
+	//gyro.run();
 	
 	ros::spin();
 	return 0;
