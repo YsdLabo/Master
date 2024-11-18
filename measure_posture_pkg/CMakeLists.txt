@@ -204,7 +204,8 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(measure_posture_node src/measure_posture.cpp src/cal_posture_by_gravity.cpp src/cal_posture_by_gyro.cpp)
+add_executable(measure_posture_node src/measure_posture.cpp src/cal_posture_by_gravity.cpp)
+#add_executable(measure_posture_node src/measure_posture.cpp src/cal_posture_by_gravity.cpp src/cal_posture_by_gyro.cpp)
 target_link_libraries(measure_posture_node ${catkin_LIBRARIES})
 
 
